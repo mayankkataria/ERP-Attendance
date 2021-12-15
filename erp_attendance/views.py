@@ -1,5 +1,6 @@
-from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.contrib.auth.models import Group, User
+from django.http.response import HttpResponseRedirect
+from django.shortcuts import redirect, render
 
 from erp_attendance.models import Employee
 
@@ -10,3 +11,26 @@ def index(request):
 
 def login(request):
     return render(request, 'login.html')
+
+def addEmployee(request):
+    firstname = request.POST['firstname']
+    lastname = request.POST['lastname']
+    username = request.POST['username']
+    empid = request.POST['empid']
+    email = request.POST['email']
+    department = request.POST['department']
+    isAdmin = request.POST['isAdmin'] == 'isAdmin'
+    print('--------------isAdmin', isAdmin)
+    user = User.objects.create_user(username, email, 'Arcgate1!')
+    user.is_superuser = isAdmin
+    user.first_name = firstname
+    user.last_name = lastname
+    user.save()
+
+    employee = Employee(user=user, empid=empid)
+    employee.save()
+
+    group = Group.objects.get(name=department)
+    group.user_set.add(user)
+
+    return HttpResponseRedirect('/')
