@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- {% load static %} -->
+    <link rel="stylesheet" type="text/css" href="/static/myapp/stylesheets/index.css">
+    <title>Admin panel</title>
+</head>
+
+<body>
+
+    <!-- Navbar section -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" style="color: white !important;">Admin Panel</a>
+            <button class="btn btn-outline-success" type="submit" data-toggle="modal" data-target="#exampleModalCenter">Add details</button>
+        </div>
+    </nav>
+
+    <!-- List container -->
+    <div class="container p-4">
+        <!-- List group -->
+        <ul class="list-group">
+            <!-- List items -->
+            <li class="list-group-item">
+                <div class="details-section">
+                        <b>Name:</b> Mayank Kataria <br>
+                        <b>Employee ID:</b> 18EGICS500 <br>
+                        <b>Email:</b> mynkkataria@gmail.com <br>
+                        <b>Is Admin:</b> Yes <br>
+                </div>
+                <div class="btns-section">
+                    <button class="btn btn-outline-primary m-1" data-toggle="modal" data-target="#exampleModalCenter">Edit</button>
+                    <button class="btn btn-outline-danger m-1" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- Form Modal section -->
+    <!-- Form Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <!-- Name -->
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter employee's name">
+                        </div>
+                        <!-- Employee Id -->
+                        <div class="form-group">
+                            <label for="empid">Employee Id</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter unique employee id">
+                        </div>
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
+                        </div>
+                        <!-- Is Admin -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="graduated">
+                            <label class="form-check-label" for="graduated">
+                                is Admin
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
