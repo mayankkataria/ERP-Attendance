@@ -1,4 +1,7 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render
+
+from erp_attendance.models import Employee
 
 # Create your views here.
 

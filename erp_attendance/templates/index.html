@@ -56,26 +56,31 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <!-- Name -->
+                    <form method="post" action="">
+                        <!-- First Name -->
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter employee's name">
+                            <label for="firstname">First Name</label>
+                            <input name="firstname" type="text" class="form-control" id="firstname" placeholder="Enter employee's firstname">
+                        </div>
+                        <!-- Last Name -->
+                        <div class="form-group">
+                            <label for="lastname">Last Name</label>
+                            <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Enter employee's lastname">
                         </div>
                         <!-- Employee Id -->
                         <div class="form-group">
                             <label for="empid">Employee Id</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter unique employee id">
+                            <input name="empid" type="text" class="form-control" id="name" placeholder="Enter unique employee id">
                         </div>
                         <!-- Email -->
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
+                            <input name="email" type="email" class="form-control" id="email" placeholder="example@gmail.com">
                         </div>
                         <!-- Is Admin -->
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="graduated">
-                            <label class="form-check-label" for="graduated">
+                            <input name="isAdmin" class="form-check-input" type="checkbox" value="" id="isAdmin">
+                            <label class="form-check-label" for="isAdmin">
                                 is Admin
                             </label>
                         </div>
