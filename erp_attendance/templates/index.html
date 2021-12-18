@@ -18,7 +18,8 @@
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" style="color: white !important;">Admin Panel</a>
-            <button class="btn btn-outline-success" type="submit" data-toggle="modal" data-target="#exampleModalCenter">Add details</button>
+            <button class="btn btn-outline-success" type="submit" data-toggle="modal"
+                data-target="#exampleModalCenter">Add details</button>
         </div>
     </nav>
 
@@ -27,18 +28,90 @@
         <!-- List group -->
         <ul class="list-group">
             <!-- List items -->
+            {% for employee in employees %}
             <li class="list-group-item">
                 <div class="details-section">
-                        <b>Name:</b> Mayank Kataria <br>
-                        <b>Employee ID:</b> 18EGICS500 <br>
-                        <b>Email:</b> mynkkataria@gmail.com <br>
-                        <b>Is Admin:</b> Yes <br>
+                    <b>Name:</b> {{ employee.user.first_name }} {{ employee.user.last_name }} <br>
+                    <b>Employee ID:</b> {{ employee.empid }} <br>
+                    <b>Email:</b> {{ employee.user.email }} <br>
+                    <b>Is Admin:</b> {{ employee.user.is_superuser }} <br>
                 </div>
                 <div class="btns-section">
-                    <button class="btn btn-outline-primary m-1" data-toggle="modal" data-target="#exampleModalCenter">Edit</button>
-                    <button class="btn btn-outline-danger m-1" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>
+                    <button class="btn btn-outline-primary m-1" data-toggle="modal"
+                        data-target="#editFormModal_{{employee.id}}">Edit</button>
+                    <button class="btn btn-outline-danger m-1" data-toggle="modal"
+                        onclick="location.href = '/delete-employee/{{employee.id}}'">Delete</button>
                 </div>
             </li>
+            <!-- Form Modal section -->
+            <!-- Form Modal -->
+            <div class="modal fade" id="editFormModal_{{employee.id}}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Edit details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="/edit-employee/{{employee.id}}"> {% csrf_token %}
+                                <!-- First Name -->
+                                <div class="form-group">
+                                    <label for="firstname">First Name</label>
+                                    <input name="firstname" value="{{ employee.user.first_name }}" type="text" class="form-control" id="firstname"
+                                        placeholder="Enter employee's firstname">
+                                </div>
+                                <!-- Last Name -->
+                                <div class="form-group">
+                                    <label for="lastname">Last Name</label>
+                                    <input name="lastname" value="{{ employee.user.last_name }}" type="text" class="form-control" id="lastname"
+                                        placeholder="Enter employee's lastname">
+                                </div>
+                                <!-- Username -->
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input name="username" value="{{ employee.user.username }}" type="text" class="form-control" id="username"
+                                        placeholder="Enter employee's username">
+                                </div>
+                                <!-- Employee ID -->
+                                <div class="form-group">
+                                    <label for="empid">Employee ID</label>
+                                    <input name="empid" value="{{ employee.empid }}" type="text" class="form-control" id="name"
+                                        placeholder="Enter unique employee id">
+                                </div>
+                                <!-- Email -->
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input name="email" value="{{ employee.user.email }}" type="email" class="form-control" id="email"
+                                        placeholder="example@gmail.com">
+                                </div>
+                                <!-- Department -->
+                                <div class="form-group">
+                                    <label for="department">Department</label>
+                                    <select name="department" class="form-control" id="department">
+                                        <option {% if employee.user.groups.all.0.name == 'Software' %} selected {% endif %}>Software</option>
+                                        <option {% if employee.user.groups.all.0.name == 'KPO' %} selected {% endif %}>KPO</option>
+                                    </select>
+                                </div>
+                                <!-- Is Admin -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="isAdmin" id="isAdmin" {% if employee.user.is_superuser %} checked {% endif %}>
+                                    <label class="form-check-label" for="isAdmin">
+                                        is Admin
+                                    </label>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </ul>
     </div>
 
@@ -60,27 +133,32 @@
                         <!-- First Name -->
                         <div class="form-group">
                             <label for="firstname">First Name</label>
-                            <input name="firstname" type="text" class="form-control" id="firstname" placeholder="Enter employee's firstname">
+                            <input name="firstname" type="text" class="form-control" id="firstname"
+                                placeholder="Enter employee's firstname">
                         </div>
                         <!-- Last Name -->
                         <div class="form-group">
                             <label for="lastname">Last Name</label>
-                            <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Enter employee's lastname">
+                            <input name="lastname" type="text" class="form-control" id="lastname"
+                                placeholder="Enter employee's lastname">
                         </div>
                         <!-- Username -->
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input name="username" type="text" class="form-control" id="username" placeholder="Enter employee's username">
+                            <input name="username" type="text" class="form-control" id="username"
+                                placeholder="Enter employee's username">
                         </div>
                         <!-- Employee ID -->
                         <div class="form-group">
                             <label for="empid">Employee ID</label>
-                            <input name="empid" type="text" class="form-control" id="name" placeholder="Enter unique employee id">
+                            <input name="empid" type="text" class="form-control" id="name"
+                                placeholder="Enter unique employee id">
                         </div>
                         <!-- Email -->
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input name="email" type="email" class="form-control" id="email" placeholder="example@gmail.com">
+                            <input name="email" type="email" class="form-control" id="email"
+                                placeholder="example@gmail.com">
                         </div>
                         <!-- Department -->
                         <div class="form-group">

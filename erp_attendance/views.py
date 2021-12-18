@@ -4,16 +4,20 @@ from django.shortcuts import redirect, render
 
 from erp_attendance.models import Employee
 
-# Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    # Get employees from db
+    employees = Employee.objects.all()
+    # for employee in employees:
+    #     print('group: ', employee.groups.all.0)
+    return render(request, 'index.html', {'employees': employees})
+
 
 def login(request):
     return render(request, 'login.html')
 
+
 def addEmployee(request):
-    print('----------------------------------add employee-----------------------------------------')
     firstname = request.POST['firstname']
     lastname = request.POST['lastname']
     username = request.POST['username']
@@ -34,4 +38,36 @@ def addEmployee(request):
     group = Group.objects.get(name=department)
     group.user_set.add(user)
 
+    return HttpResponseRedirect('/')
+
+
+def editEmployee(request, id):
+    firstname = request.POST['firstname']
+    lastname = request.POST['lastname']
+    username = request.POST['username']
+    empid = request.POST['empid']
+    email = request.POST['email']
+    department = request.POST['department']
+    isAdmin = request.POST.get('isAdmin') == 'on'
+
+    employee = Employee.objects.get(pk=id)
+    employee.empid = empid
+    employee.save()
+
+    user = employee.user
+    user.username = username
+    user.email = email
+    user.is_superuser = isAdmin
+    user.first_name = firstname
+    user.last_name = lastname
+    user.save()
+    group = Group.objects.get(name=department)
+    group.user_set.add(user)
+    return HttpResponseRedirect('/')
+
+
+def deleteEmployee(request, id):
+    emp = Employee.objects.get(pk=id)
+    emp.user.delete()
+    emp.delete()
     return HttpResponseRedirect('/')
