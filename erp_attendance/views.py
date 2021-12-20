@@ -71,3 +71,9 @@ def deleteEmployee(request, id):
     emp.user.delete()
     emp.delete()
     return HttpResponseRedirect('/')
+
+def showEmployee(request, id):
+    employee = Employee.objects.get(pk=id)
+    print('employee: ', employee)
+    return render(request, 'details.html', {'employee': employee})
+

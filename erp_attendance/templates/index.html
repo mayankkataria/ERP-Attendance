@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- {% load static %} -->
-    <link rel="stylesheet" type="text/css" href="/static/myapp/stylesheets/index.css">
+    <link rel="stylesheet" type="text/css" href="/static/erp_attendance/stylesheets/index.css">
     <title>Admin panel</title>
 </head>
 
@@ -29,7 +29,7 @@
         <ul class="list-group">
             <!-- List items -->
             {% for employee in employees %}
-            <li class="list-group-item">
+            <li class="list-group-item" onclick="location.href = '/show-employee/{{employee.id}}'">
                 <div class="details-section">
                     <b>Name:</b> {{ employee.user.first_name }} {{ employee.user.last_name }} <br>
                     <b>Employee ID:</b> {{ employee.empid }} <br>
