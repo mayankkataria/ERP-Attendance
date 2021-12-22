@@ -23,26 +23,41 @@
         </div>
     </nav>
 
-    <!-- List container -->
-    <div class="container p-4">
-        <!-- List group -->
-        <ul class="list-group">
-            <!-- List items -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Employee ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Username</th>
+                <th scope="col">Department</th>
+                <th scope="col">Email</th>
+                <th scope="col">Is admin</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for employee in employees %}
-            <li class="list-group-item" onclick="location.href = '/show-employee/{{employee.id}}'">
-                <div class="details-section">
-                    <b>Name:</b> {{ employee.user.first_name }} {{ employee.user.last_name }} <br>
-                    <b>Employee ID:</b> {{ employee.empid }} <br>
-                    <b>Email:</b> {{ employee.user.email }} <br>
-                    <b>Is Admin:</b> {{ employee.user.is_superuser }} <br>
-                </div>
-                <div class="btns-section">
+            <tr>
+                <td>{{ employee.empid }}</td>
+                <td>{{ employee.user.first_name }}</td>
+                <td>{{ employee.user.last_name }}</td>
+                <td>{{ employee.user.username }}</td>
+                <td>{{ employee.user.groups.all.0.name }}</td>
+                <td>{{ employee.user.email }}</td>
+                <td>{{ employee.user.is_superuser }}</td>
+                <td>
                     <button class="btn btn-outline-primary m-1" data-toggle="modal"
                         data-target="#editFormModal_{{employee.id}}">Edit</button>
-                    <button class="btn btn-outline-danger m-1" data-toggle="modal"
-                        onclick="location.href = '/delete-employee/{{employee.id}}'">Delete</button>
-                </div>
-            </li>
+                </td>
+                <td>
+                    <button class="btn btn-outline-danger m-1"
+                        onclick="location.href = '/delete-employee/{{employee.id}}';">Delete</button>
+                </td>
+                <td>
+                    <button class="btn btn-outline-success m-1"
+                    onclick="location.href = '/show-employee/{{employee.id}}'">Open</button>
+                </td>
+            </tr>
             <!-- Form Modal section -->
             <!-- Form Modal -->
             <div class="modal fade" id="editFormModal_{{employee.id}}" tabindex="-1" role="dialog"
@@ -60,39 +75,40 @@
                                 <!-- First Name -->
                                 <div class="form-group">
                                     <label for="firstname">First Name</label>
-                                    <input name="firstname" value="{{ employee.user.first_name }}" type="text" class="form-control" id="firstname"
-                                        placeholder="Enter employee's firstname">
+                                    <input name="firstname" value="{{ employee.user.first_name }}" type="text"
+                                        class="form-control" id="firstname" placeholder="Enter employee's firstname">
                                 </div>
                                 <!-- Last Name -->
                                 <div class="form-group">
                                     <label for="lastname">Last Name</label>
-                                    <input name="lastname" value="{{ employee.user.last_name }}" type="text" class="form-control" id="lastname"
-                                        placeholder="Enter employee's lastname">
+                                    <input name="lastname" value="{{ employee.user.last_name }}" type="text"
+                                        class="form-control" id="lastname" placeholder="Enter employee's lastname">
                                 </div>
                                 <!-- Username -->
                                 <div class="form-group">
                                     <label for="username">Username</label>
-                                    <input name="username" value="{{ employee.user.username }}" type="text" class="form-control" id="username"
-                                        placeholder="Enter employee's username">
+                                    <input name="username" value="{{ employee.user.username }}" type="text"
+                                        class="form-control" id="username" placeholder="Enter employee's username">
                                 </div>
                                 <!-- Employee ID -->
                                 <div class="form-group">
                                     <label for="empid">Employee ID</label>
-                                    <input name="empid" value="{{ employee.empid }}" type="text" class="form-control" id="name"
-                                        placeholder="Enter unique employee id">
+                                    <input name="empid" value="{{ employee.empid }}" type="text" class="form-control"
+                                        id="name" placeholder="Enter unique employee id">
                                 </div>
                                 <!-- Email -->
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input name="email" value="{{ employee.user.email }}" type="email" class="form-control" id="email"
-                                        placeholder="example@gmail.com">
+                                    <input name="email" value="{{ employee.user.email }}" type="email"
+                                        class="form-control" id="email" placeholder="example@gmail.com">
                                 </div>
                                 <!-- Department -->
                                 <div class="form-group">
                                     <label for="department">Department</label>
                                     <select name="department" class="form-control" id="department">
                                         <option {% if employee.user.groups.all.0.name == 'Software' %} selected {% endif %}>Software</option>
-                                        <option {% if employee.user.groups.all.0.name == 'KPO' %} selected {% endif %}>KPO</option>
+                                        <option {% if employee.user.groups.all.0.name == 'KPO' %} selected {% endif %}>KPO
+                                        </option>
                                     </select>
                                 </div>
                                 <!-- Is Admin -->
@@ -112,8 +128,8 @@
                 </div>
             </div>
             {% endfor %}
-        </ul>
-    </div>
+        </tbody>
+    </table>
 
 
     <!-- Form Modal section -->

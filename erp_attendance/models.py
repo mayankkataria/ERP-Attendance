@@ -15,5 +15,5 @@ class AttendanceSheet(models.Model):
     date = models.DateField(default=date.today)
     login_time = models.TimeField()
     logout_time = models.TimeField()
-    break_hours = models.TimeField()
+    break_hours = models.IntegerField()
     remarks = models.CharField(max_length=50)

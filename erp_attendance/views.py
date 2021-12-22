@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group, User
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import redirect, render
 
-from erp_attendance.models import Employee
+from erp_attendance.models import AttendanceSheet, Employee
 
 
 def index(request):
@@ -74,6 +74,7 @@ def deleteEmployee(request, id):
 
 def showEmployee(request, id):
     employee = Employee.objects.get(pk=id)
-    print('employee: ', employee)
-    return render(request, 'details.html', {'employee': employee})
+    attendanceSheet = AttendanceSheet.objects.filter(employee=employee)
+    print('---------------------------------------------------------------------attendanceSheet: ', attendanceSheet)
+    return render(request, 'details.html', {'employee': employee, 'attendanceSheet': attendanceSheet})
 

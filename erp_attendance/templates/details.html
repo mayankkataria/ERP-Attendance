@@ -17,7 +17,7 @@
     <!-- Navbar section -->
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" style="color: white !important;">{{ employee.user.username }}</a>
+            <a class="navbar-brand" style="color: white !important;">{{ employee.user.first_name }} {{ employee.user.last_name }}</a>
         </div>
     </nav>
 
@@ -38,42 +38,30 @@
             <b>Email: </b> {{ employee.user.email }}
         </ul>
 
-        <h2>Attendance Sheet</h2>
+        <h2 style="margin-top: 20px;">Attendance Sheet</h2>
 
-        <div style="margin-bottom: 20px;">
-            <ul>
-                <b>Date: </b> 20/10/21
-            </ul>
-            <ul>
-                <b>Login time: </b> 9:00 AM
-            </ul>
-            <ul>
-                <b>Logout time: </b> 6:00 PM
-            </ul>
-            <ul>
-                <b>Break hours: </b> 1:00
-            </ul>
-            <ul>
-                <b>Remarks: </b> No remarks
-            </ul>
-        </div>
-        <div>
-            <ul>
-                <b>Date: </b> 21/10/21
-            </ul>
-            <ul>
-                <b>Login time: </b> 9:00 AM
-            </ul>
-            <ul>
-                <b>Logout time: </b> 6:00 PM
-            </ul>
-            <ul>
-                <b>Break hours: </b> 1:00
-            </ul>
-            <ul>
-                <b>Remarks: </b> No remarks
-            </ul>
-        </div>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Login time</th>
+                <th scope="col">Logout time</th>
+                <th scope="col">Break hours</th>
+                <th scope="col">Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for attendance in attendanceSheet %}
+              <tr>
+                <td>{{ attendance.date }}</td>
+                <td>{{ attendance.login_time }}</td>
+                <td>{{ attendance.logout_time }}</td>
+                <td>{{ attendance.break_hours }} minutes</td>
+                <td>{{ attendance.remarks }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
     </div>
 
 

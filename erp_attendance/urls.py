@@ -10,4 +10,4 @@ urlpatterns = [
     path('edit-employee/<int:id>', views.editEmployee, name='editEmployee'),
     path('delete-employee/<int:id>', views.deleteEmployee, name='deleteEmployee'),
     path('show-employee/<int:id>', views.showEmployee, name='showEmployee'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
