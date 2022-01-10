@@ -1,0 +1,4 @@
+Validations -
+- No field should be blank
+- Numbers not allowed in firstname and lastname
+- Special characters(except underscore) not allowed in all fields except email

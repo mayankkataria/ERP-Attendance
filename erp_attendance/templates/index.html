@@ -55,9 +55,10 @@
                 </td>
                 <td>
                     <button class="btn btn-outline-success m-1"
-                    onclick="location.href = '/show-employee/{{employee.id}}'">Open</button>
+                        onclick="location.href = '/show-employee/{{employee.id}}'">Open</button>
                 </td>
             </tr>
+            <!-- Update form -->
             <!-- Form Modal section -->
             <!-- Form Modal -->
             <div class="modal fade" id="editFormModal_{{employee.id}}" tabindex="-1" role="dialog"
@@ -76,19 +77,20 @@
                                 <div class="form-group">
                                     <label for="firstname">First Name</label>
                                     <input name="firstname" value="{{ employee.user.first_name }}" type="text"
-                                        class="form-control" id="firstname" placeholder="Enter employee's firstname">
+                                        class="form-control"
+                                        placeholder="Enter employee's firstname">
                                 </div>
                                 <!-- Last Name -->
                                 <div class="form-group">
                                     <label for="lastname">Last Name</label>
                                     <input name="lastname" value="{{ employee.user.last_name }}" type="text"
-                                        class="form-control" id="lastname" placeholder="Enter employee's lastname">
+                                        class="form-control" placeholder="Enter employee's lastname">
                                 </div>
                                 <!-- Username -->
                                 <div class="form-group">
                                     <label for="username">Username</label>
                                     <input name="username" value="{{ employee.user.username }}" type="text"
-                                        class="form-control" id="username" placeholder="Enter employee's username">
+                                        class="form-control" placeholder="Enter employee's username">
                                 </div>
                                 <!-- Employee ID -->
                                 <div class="form-group">
@@ -100,7 +102,7 @@
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input name="email" value="{{ employee.user.email }}" type="email"
-                                        class="form-control" id="email" placeholder="example@gmail.com">
+                                        class="form-control" placeholder="example@gmail.com">
                                 </div>
                                 <!-- Department -->
                                 <div class="form-group">
@@ -113,7 +115,8 @@
                                 </div>
                                 <!-- Is Admin -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="isAdmin" id="isAdmin" {% if employee.user.is_superuser %} checked {% endif %}>
+                                    <input class="form-check-input" type="checkbox" name="isAdmin" id="isAdmin"
+                                    {% if employee.user.is_superuser %} checked {% endif %}>
                                     <label class="form-check-label" for="isAdmin">
                                         is Admin
                                     </label>
@@ -132,6 +135,7 @@
     </table>
 
 
+    <!-- Add form -->
     <!-- Form Modal section -->
     <!-- Form Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
@@ -151,30 +155,45 @@
                             <label for="firstname">First Name</label>
                             <input name="firstname" type="text" class="form-control" id="firstname"
                                 placeholder="Enter employee's firstname">
+                            <div>
+                                <small id="firstname-error" class="text-danger"></small>
+                            </div>
                         </div>
                         <!-- Last Name -->
                         <div class="form-group">
                             <label for="lastname">Last Name</label>
                             <input name="lastname" type="text" class="form-control" id="lastname"
                                 placeholder="Enter employee's lastname">
+                            <div>
+                                <small id="lastname-error" class="text-danger"></small>
+                            </div>
                         </div>
                         <!-- Username -->
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input name="username" type="text" class="form-control" id="username"
                                 placeholder="Enter employee's username">
+                            <div>
+                                <small id="username-error" class="text-danger"></small>
+                            </div>
                         </div>
                         <!-- Employee ID -->
                         <div class="form-group">
                             <label for="empid">Employee ID</label>
-                            <input name="empid" type="text" class="form-control" id="name"
+                            <input name="empid" type="text" class="form-control" id="empid"
                                 placeholder="Enter unique employee id">
+                            <div>
+                                <small id="empid-error" class="text-danger"></small>
+                            </div>
                         </div>
                         <!-- Email -->
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input name="email" type="email" class="form-control" id="email"
                                 placeholder="example@gmail.com">
+                            <div>
+                                <small id="email-error" class="text-danger"></small>
+                            </div>
                         </div>
                         <!-- Department -->
                         <div class="form-group">
@@ -211,6 +230,92 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+        isAlphabet = (teststr) => {
+            return /[^a-zA-Z]/.test(teststr)
+        }
+        haveSpecialChar = (teststr) => {
+            return /[!#$%^&*()\=\[\]{};':"\\|,<>\/?]+/.test(teststr)
+        }
+        isAlNum = (teststr) => {
+            console.log('tst str: ', teststr)
+            return /[^a-zA-Z0-9_]/.test(teststr)
+        }
+        isBlank = (teststr) => {
+            return !teststr.trim()
+        }
+        var firstname = $('#firstname')
+        var lastname = $('#lastname')
+        var username = $('#username')
+        var empid = $('#empid')
+        var email = $('#email')
+        firstname.on('input', (ev) => {
+        var firstnameError = $('#firstname-error')
+            if (isAlphabet(firstname.val())) {
+                console.log('inif');
+                firstnameError.html('Firstname should only contain alphabets');
+            }
+            else {
+                firstnameError.html('');
+                
+            }
+        })
+        lastname.on('input', (ev) => {
+            var lastnameError = $('#lastname-error')
+            if (isAlphabet(lastname.val())) {
+                console.log('inif');
+                lastnameError.html('Lastname should only contain alphabets');
+            }
+            else {
+                lastnameError.html('');
+            }
+        })
+        username.on('input', (ev) => {
+            var usernameError = $('#username-error')
+                if (haveSpecialChar(username.val())) {
+                    usernameError.html('Username can contain alphanumeric, _, @, +, . and - characters only');
+                }
+                else {
+                    $.ajax({
+                        url: "/validate-form",
+                        method: 'GET',
+                        data: {username: username.val()},
+                        success: (errMsg) => {
+                            usernameError.html(errMsg);
+                        }
+                    })
+                }
+        })
+        empid.on('input', (ev) => {
+            var empidError = $('#empid-error')
+                if (isAlNum(empid.val())) {
+                    empidError.html('Employee id can only contain alphanumeric characters and underscores(_).');
+                }
+                else {
+                    console.log('in else block');
+                    $.ajax({
+                        url: "/validate-form",
+                        method: 'GET',
+                        data: {empid: empid.val()},
+                        success: (errMsg) => {
+                            empidError.html(errMsg);
+                        }
+                    })
+                }
+        })
+        email.on('input', (ev) => {
+            var emailError = $('#email-error')
+            $.ajax({
+                url: "/validate-form",
+                method: 'GET',
+                data: {email: email.val()},
+                success: (errMsg) => {
+                    emailError.html(errMsg);
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>
