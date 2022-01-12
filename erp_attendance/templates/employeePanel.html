@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <!-- {% load static %} -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/static/erp_attendance/stylesheets/details.css"
+    />
+    <title>Admin panel</title>
+  </head>
+
+  <body>
+    <!-- Navbar section -->
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" style="color: white !important"
+          >{{ employee.user.first_name }} {{ employee.user.last_name }}</a
+        >
+      </div>
+    </nav>
+
+    <div class="container">
+      <ul>
+        <b>First Name: </b>
+        {{ employee.user.first_name }}
+      </ul>
+      <ul>
+        <b>Last Name: </b>
+        {{ employee.user.last_name }}
+      </ul>
+      <ul>
+        <b>Username: </b>
+        {{ employee.user.username }}
+      </ul>
+      <ul>
+        <b>Employee ID: </b>
+        {{ employee.empid }}
+      </ul>
+      <ul>
+        <b>Email: </b>
+        {{ employee.user.email }}
+      </ul>
+
+      <h2 style="margin-top: 20px">Attendance Sheet</h2>
+
+      {% comment %} Attendance Form {% endcomment %}
+      {% if not employee.user.is_superuser %}
+      <form method="post" action="/add-attendance/{{employee.id}}">
+        {% csrf_token %}
+        <table class="col-md-10 mt-10">
+          <tr>
+            <th>
+              <div class="form-group mb-3">
+                {% comment %} <b>Date:</b>{{attendance.date}} {% endcomment %}
+                <label for="date" class="form-label">Date</label>
+                <input type="date" class="form-control" name="date" id="date" />
+              </div>
+            </th>
+            <th>
+              <div class="form-group mb-3">
+                <label for="login_time" class="form-label">Login Time</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  placeholder="enter your name"
+                  name="login_time"
+                  id="login_time"
+                />
+              </div>
+            </th>
+            <th>
+              <div class="form-group mb-3">
+                <label for="logout_time" class="form-label">Logout Time</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  placeholder="enter your name"
+                  name="logout_time"
+                  id="logout_time"
+                />
+              </div>
+            </th>
+
+            <th>
+              <div class="form-group mb-3">
+                <label for="break_hours" class="form-label">Break Hours</label
+                ><br />
+                <input
+                  type="number"
+                  class="form-control"
+                  name="break_hours"
+                  id="break_hours"
+                />
+              </div>
+            </th>
+            <th>
+              <div class="form-group mb-3">
+                <label for="remarks" class="form-label">Remarks</label><br />
+                <input
+                  type="remarks"
+                  class="form-control"
+                  placeholder="enter your Remaeks"
+                  name="remarks"
+                  id="remarks"
+                />
+              </div>
+            </th>
+            <th>
+              <div class="form-group mb-0">
+                <button type="submit" class="btn btn-outline-primary">
+                  Submit
+                </button>
+              </div>
+            </th>
+          </tr>
+        </table>
+      </form>
+      {% endif %}
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Login time</th>
+            <th scope="col">Logout time</th>
+            <th scope="col">Break hours</th>
+            <th scope="col">Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for attendance in attendanceSheet %}
+          <tr>
+            <td>{{ attendance.date }}</td>
+            <td>{{ attendance.login_time }}</td>
+            <td>{{ attendance.logout_time }}</td>
+            <td>{{ attendance.break_hours }} minutes</td>
+            <td>{{ attendance.remarks }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Bootstrap scripts -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

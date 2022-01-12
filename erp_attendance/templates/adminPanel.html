@@ -18,8 +18,15 @@
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" style="color: white !important;">Admin Panel</a>
-            <button class="btn btn-outline-success" type="submit" data-toggle="modal"
-                data-target="#exampleModalCenter">Add details</button>
+            <h1>Arcgate</h1>
+           <div>
+                
+                <button class="btn btn-outline-success" data-toggle="modal"
+                    data-target="#exampleModalCenter">Add details</button>
+                <button class="btn btn-outline-success" >
+                        <a href="{% url 'logoutUser' %}" class="p-2 rounded bg-gray-700 text-white">Logout</a>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -27,20 +34,20 @@
         <thead>
             <tr>
                 <th scope="col">Employee ID</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
+                <th scope="col">Name</th>
+                {% comment %} <th scope="col">Last Name</th> {% endcomment %}
                 <th scope="col">Username</th>
                 <th scope="col">Department</th>
                 <th scope="col">Email</th>
-                <th scope="col">Is admin</th>
+                {% comment %} <th scope="col">Is admin</th> {% endcomment %}
             </tr>
         </thead>
         <tbody>
             {% for employee in employees %}
             <tr>
                 <td>{{ employee.empid }}</td>
-                <td>{{ employee.user.first_name }}</td>
-                <td>{{ employee.user.last_name }}</td>
+                <td>{{ employee.user.first_name | capfirst}} {{ employee.user.last_name |capfirst}}</td>
+                
                 <td>{{ employee.user.username }}</td>
                 <td>{{ employee.user.groups.all.0.name }}</td>
                 <td>{{ employee.user.email }}</td>
@@ -76,16 +83,15 @@
                                 <!-- First Name -->
                                 <div class="form-group">
                                     <label for="firstname">First Name</label>
-                                    <input name="firstname" value="{{ employee.user.first_name }}" type="text"
-                                        class="form-control"
-                                        placeholder="Enter employee's firstname">
+                                    <input name="firstname" value="{{ employee.user.first_name |capfirst}} {{ employee.user.last_name |capfirst}}" type="text"
+                                        class="form-control" id="firstname" placeholder="Enter employee's firstname">
                                 </div>
                                 <!-- Last Name -->
-                                <div class="form-group">
+                                {% comment %} <div class="form-group">
                                     <label for="lastname">Last Name</label>
                                     <input name="lastname" value="{{ employee.user.last_name }}" type="text"
-                                        class="form-control" placeholder="Enter employee's lastname">
-                                </div>
+                                        class="form-control" id="lastname" placeholder="Enter employee's lastname">
+                                </div> {% endcomment %}
                                 <!-- Username -->
                                 <div class="form-group">
                                     <label for="username">Username</label>
