@@ -29,7 +29,22 @@
             </div>
         </div>
     </nav>
-
+    <form action="/search-employees" class="form-inline my-2 my-lg-0">
+        <!-- <form action="javascript:void(0);" class="form-inline my-2 my-lg-0" method="get"> -->
+        <input id="searchField" name="searchedEmp" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" required>
+        <!-- Is admin dropdown -->
+        <select class="form-control" name="isAdminDropdown">
+            <option selected="selected" disabled>Is admin</option>
+                    <option value="True">True</option>
+                    <option value="False">False</option>
+            </select>
+            <select class="form-control" name="deptName">
+                <option selected="selected" disabled>Department</option>
+                        <option value="Software">Software</option>
+                        <option value="KPO">KPO</option>
+                </select>
+        <button id="searchBtn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
     <table class="table">
         <thead>
             <tr>
@@ -39,7 +54,7 @@
                 <th scope="col">Username</th>
                 <th scope="col">Department</th>
                 <th scope="col">Email</th>
-                {% comment %} <th scope="col">Is admin</th> {% endcomment %}
+                <th scope="col">Is admin</th>
             </tr>
         </thead>
         <tbody>
@@ -256,6 +271,8 @@
         var username = $('#username')
         var empid = $('#empid')
         var email = $('#email')
+        var searchBtn = $('#searchBtn')
+        var searchField = $('#searchField')
         firstname.on('input', (ev) => {
         var firstnameError = $('#firstname-error')
             if (isAlphabet(firstname.val())) {

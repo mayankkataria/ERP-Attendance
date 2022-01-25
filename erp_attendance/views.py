@@ -1,5 +1,5 @@
 from django.contrib.auth.models import Group, User
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.response import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate,login,logout
 from erp_attendance.models import AttendanceSheet, Employee
@@ -10,6 +10,9 @@ from django.urls import reverse
 def adminPanel(request):
     # Get employees from db
     employees = Employee.objects.all()
+    print('kpo admins: ', User.objects.filter(is_superuser=True, groups__name='KPO'))
+    print('software admins: ', User.objects.filter(is_superuser=True, groups__name='Software'))
+    print('Only user: ', User.objects.filter(is_superuser=False))
     # for employee in employees:
     #     print('group: ', employee.groups.all.0)
     return render(request, 'adminPanel.html', {'employees': employees})
@@ -148,3 +151,9 @@ def validateForm(request):
     else:
         return HttpResponse('')
 
+def searchEmployees(request):
+    searchedEmp = request.GET['searchedEmp']
+    isAdmin = request.GET['isAdminDropdown']
+    deptName = request.GET['deptName']
+    employees = Employee.objects.filter(user__username = searchedEmp, user__is_superuser = isAdmin, user__groups__name = deptName)
+    return render(request, 'adminPanel.html', {'employees': employees})
