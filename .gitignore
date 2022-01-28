@@ -1,5 +1,6 @@
 data/
 __pychache__/
+erp_attendance/__pycache__/
 
 key.txt
 key.txt.pub
